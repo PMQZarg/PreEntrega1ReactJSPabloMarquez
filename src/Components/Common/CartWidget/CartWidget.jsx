@@ -1,11 +1,16 @@
-import {BsCart2} from "react-icons/bs"
+import { Badge } from '@mui/material';
+import ShoppingCartCheckoutIcon from '@mui/icons-material/ShoppingCartCheckout';
+import { Link } from 'react-router-dom';
+
 const CartWidget = () => {
   return (
-    <div>
-        <span>2</span>
-      <BsCart2/>
-      </div>
-  )
-}
+    <Link to="/cart">
+        <Badge badgeContent={0} showZero color="secondary">
+      
+      <ShoppingCartCheckoutIcon color= "inherit" />
+    </Badge>
+      </Link>
+  );
+};
 
-export default CartWidget
+export default CartWidget;

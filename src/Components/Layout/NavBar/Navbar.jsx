@@ -1,22 +1,185 @@
+import * as React from 'react';
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+
+import CardMedia from '@mui/material/CardMedia';
+import CartWidget from '../../Common/cartWidget/CartWidget';
+  
+import { Outlet, Link } from 'react-router-dom'; 
 
 
 
-import CartWidget from "../../Common/CartWidget/CartWidget"
+const pages = ['Productos', 'Servicios'];
+const settings = ['Ecommerce'];
 
-export const Navbar = () => {
+export const NavBar = ()=> {
+  const [anchorElNav, setAnchorElNav] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const handleOpenNavMenu = (event) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+
   return (
-    <div className="navbar">
-      <h4>Logo</h4>
-      <img src="https://res.cloudinary.com/diwok5a0s/image/upload/v1695773085/Logo_PMQZ4_100x100_ywhdbd.png" />
-      <ul>
-        <li>Clases/Cursos</li>
-        <li>Tutoriales</li>
-        <li>Producción</li>
-        <li>Consultoría</li>
-        <li>Music Track Delivery</li>
-      </ul>  
-      {/*WIDGET CARRITO*/}
-      <CartWidget/>
-    </div>
+    <>
+
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          
+          <Typography
+            variant="h6"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'none', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            <Link to = {"/"}>
+            <CardMedia component="img"
+          height="50" 
+          image="https://res.cloudinary.com/diwok5a0s/image/upload/v1695773085/Logo_PMQZ4_100x100_ywhdbd.png" alt="PMQZ Logotipo"/>
+            
+             </Link>
+          </Typography>
+
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              
+              <MenuIcon />
+            </IconButton>
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: 'block', md: 'none' },
+              }}
+            >
+{settings.map((setting) => (
+                <Button
+                key={setting}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                <Link style={{textDecoration:"none", color:"blue"}} to ={`/${setting}`}>{setting}</Link>
+              </Button>
+              ))}
+
+              {pages.map((page) => (
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  
+                  <Typography textAlign="center" sx={{ my: 2, color: 'white', display: 'block' }}>
+                    <Link style={{textDecoration:"none", color:"blue"}} to ={`/category/${page}`}>{page}</Link>
+                    </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
+         
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="#app-bar-with-responsive-menu"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            <Link to = {"/"}>
+            <CardMedia component="img"
+          height="50"
+          image="https://res.cloudinary.com/diwok5a0s/image/upload/v1695773085/Logo_PMQZ4_100x100_ywhdbd.png" alt="PMQZ Logotipo"/>
+          </Link>  
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+
+          {settings.map((setting) => (
+                <Button
+                key={setting}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                <Link style={{textDecoration:"none", color:"white"}} to ={`/${setting}`}>{setting}</Link>
+              </Button>
+              ))}
+            
+            {pages.map((page) => (
+              <Button
+                key={page}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
+              >
+                <Link style={{textDecoration:"none", color:"white"}} to ={`/category/${page}`}>{page}</Link>
+              </Button>
+            ))}
+          </Box>
+      
+          <CartWidget/>
+          
+        </Toolbar>
+        
+      </Container>
+     
+    </AppBar>
+    
+
+<Outlet/>
+    </>
   );
-};
+  
+ };
+
